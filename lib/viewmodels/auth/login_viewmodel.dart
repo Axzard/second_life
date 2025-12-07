@@ -82,7 +82,16 @@ class LoginViewModel extends GetxController {
       final UserModel? userData = await _userService.getUserById(user.uid);
 
       if (userData == null) {
+        await FirebaseAuth.instance.signOut();
         showMessage("Data user tidak ditemukan");
+        return;
+      }
+
+      final status = (userData.status).toString().toLowerCase();
+      if (status != "aktif") {
+        await FirebaseAuth.instance.signOut();
+        await _rememberService.clearLoginData();
+        showMessage("Anda sudah di banned oleh admin");
         return;
       }
 
@@ -116,8 +125,8 @@ class LoginViewModel extends GetxController {
       "Info",
       msg,
       snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF00775A),
-      colorText: Colors.white,
+      backgroundColor: Colors.white,
+      colorText: Color(0xFF00775A),
       borderRadius: 12,
       margin: const EdgeInsets.all(16),
     );

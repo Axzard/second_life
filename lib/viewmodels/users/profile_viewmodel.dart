@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:second_life/services/auth/user_status_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:second_life/views/auth/welcome_view.dart';
+import 'package:second_life/views/auth/login_view.dart';
 import 'package:second_life/models/auth/user_model.dart';
 
 
@@ -230,7 +230,7 @@ class ProfileViewModel extends GetxController {
       onConfirm: () async {
         await _statusService.setUserOffline();
         await FirebaseAuth.instance.signOut();
-        Get.offAll(() => const WelcomeView());
+        Get.offAll(() => const LoginView());
       },
     );
   }

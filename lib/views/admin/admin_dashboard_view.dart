@@ -18,6 +18,7 @@ class HomeAdminView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFF00775A),
         elevation: 0,
         title: const Text(
