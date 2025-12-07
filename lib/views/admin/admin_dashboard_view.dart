@@ -5,6 +5,7 @@ import 'package:second_life/views/admin/kelola_user_view.dart';
 import 'package:second_life/views/admin/kelola_product_view.dart';
 import 'package:second_life/views/admin/kelola_category_view.dart';
 import 'package:second_life/views/admin/laporan_pengguna_view.dart';
+import 'package:second_life/views/auth/login_view.dart';
 import 'package:second_life/widgets/admin/summary_card.dart';
 import 'package:second_life/widgets/admin/menu_item_card.dart';
 
@@ -42,7 +43,7 @@ class HomeAdminView extends StatelessWidget {
                 buttonColor: Colors.red,
                 onConfirm: () {
                   Get.back();
-                  Get.offAllNamed('/welcome');
+                  Get.offAll(() => const LoginView());
                 },
               );
             },
@@ -59,11 +60,6 @@ class HomeAdminView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Ringkasan Statistik",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(

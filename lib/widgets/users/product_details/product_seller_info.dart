@@ -9,14 +9,14 @@ class ProductSellerInfo extends StatelessWidget {
   Future<Map<String, dynamic>> _getSellerData() async {
     if (sellerId.isEmpty) return {};
 
-    // 1️⃣ Ambil data user
-    final userDoc =
-        await FirebaseFirestore.instance.collection('users').doc(sellerId).get();
+    final userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(sellerId)
+        .get();
     if (!userDoc.exists) return {};
 
     final userData = userDoc.data()!;
 
-    // 2️⃣ Hitung total produk dari collection 'product'
     final productSnap = await FirebaseFirestore.instance
         .collection('products')
         .where('userId', isEqualTo: sellerId)
@@ -35,14 +35,13 @@ class ProductSellerInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    
-    // Responsive sizing
+
     final containerPadding = screenWidth * 0.04;
     final avatarRadius = screenWidth * 0.075;
     final titleFontSize = screenWidth * 0.047;
     final nameFontSize = screenWidth * 0.042;
     final infoFontSize = screenWidth * 0.036;
-    
+
     return FutureBuilder<Map<String, dynamic>>(
       future: _getSellerData(),
       builder: (context, snapshot) {

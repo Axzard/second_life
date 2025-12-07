@@ -13,8 +13,8 @@ class ProductImageSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final imageHeight = screenHeight * 0.45; // 45% of screen height
-    
+    final imageHeight = screenHeight * 0.45;
+
     return SizedBox(
       height: imageHeight,
       child: PageView.builder(

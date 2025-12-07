@@ -91,17 +91,17 @@ class LoginViewModel extends GetxController {
       if (status != "aktif") {
         await FirebaseAuth.instance.signOut();
         await _rememberService.clearLoginData();
-        showMessage("Anda sudah di banned oleh admin");
+        showMessage("Anda sudah di banned oleh admin",error: true);
         return;
       }
 
       if (isUser.value && userData.role != "user") {
-        showMessage("Silakan Login Sebagai Admin");
+        showMessage("Silakan Login Sebagai Admin",error: true);
         return;
       }
 
       if (!isUser.value && userData.role != "admin") {
-        showMessage("Silakan Login Sebagai User");
+        showMessage("Silakan Login Sebagai User",error: true);
         return;
       }
 
@@ -114,23 +114,23 @@ class LoginViewModel extends GetxController {
       await _statusService.setUserOnline();
       showMessage("Login berhasil");
     } on FirebaseAuthException catch (e) {
-      showMessage(e.message ?? "Login error");
+      showMessage(e.message ?? "Login error",error: true);
     } catch (e) {
       showMessage(e.toString());
     }
   }
 
-  void showMessage(String msg) {
-    Get.snackbar(
-      "Info",
-      msg,
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.white,
-      colorText: Color(0xFF00775A),
-      borderRadius: 12,
-      margin: const EdgeInsets.all(16),
-    );
-  }
+  void showMessage(String msg, {bool error = false}) {
+  Get.snackbar(
+    "Info",
+    msg,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: error ? Colors.red : Color(0xFF00775A),
+    colorText: error ? Colors.white : Colors.white,
+    borderRadius: 12,
+    margin: const EdgeInsets.all(16),
+  );
+}
 
   @override
   void onClose() {

@@ -61,45 +61,103 @@ class KelolaProductView extends StatelessWidget {
                       margin: const EdgeInsets.only(bottom: 12),
                       child: ListTile(
                         leading: firstImage.isNotEmpty
-                            ? Image.memory(
-                                const Base64Decoder().convert(firstImage),
-                                width: 50,
-                                height: 50,
-                                fit: BoxFit.cover,
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.memory(
+                                  const Base64Decoder().convert(firstImage),
+                                  width: 60,
+                                  height: 60,
+                                  fit: BoxFit.cover,
+                                ),
                               )
                             : Container(
-                                width: 50,
-                                height: 50,
-                                color: Colors.grey.shade300,
-                                child: const Icon(Icons.image),
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade300,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: const Icon(Icons.image, color: Colors.grey),
                               ),
                         title: Text(
                           product["nama"] ?? "No Name",
                           style: const TextStyle(fontWeight: FontWeight.bold),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Harga: ${product["harga"] ?? "0"}"),
-                            Text("Penjual: ${product["sellerName"] ?? "Unknown"}"),
+                            Text(
+                              "Rp ${(product["harga"] ?? 0).toString()}",
+                              style: TextStyle(
+                                color: Colors.green.shade700,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              "Penjual: ${product["sellerName"] ?? "Unknown"}",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
                           ],
                         ),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.red),
-                          onPressed: () {
-                            Get.defaultDialog(
-                              title: "Hapus Produk",
-                              middleText: "Apakah Anda yakin ingin menghapus produk ini?",
-                              textCancel: "Batal",
-                              textConfirm: "Hapus",
-                              confirmTextColor: Colors.white,
-                              buttonColor: Colors.red,
-                              onConfirm: () {
-                                vm.deleteProduct(product["id"]);
-                                Get.back();
+                        trailing: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.red.shade50,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: Colors.red.shade100,
+                              width: 1,
+                            ),
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                Get.defaultDialog(
+                                  title: "Hapus Produk",
+                                  middleText: "Apakah Anda yakin ingin menghapus produk ini?",
+                                  textCancel: "Batal",
+                                  textConfirm: "Hapus",
+                                  confirmTextColor: Colors.white,
+                                  buttonColor: Colors.red,
+                                  onConfirm: () {
+                                    vm.deleteProduct(product["id"]);
+                                    Get.back();
+                                  },
+                                );
                               },
-                            );
-                          },
+                              borderRadius: BorderRadius.circular(8),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 6,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.delete,
+                                      color: Colors.red.shade700,
+                                      size: 16,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      "Hapus",
+                                      style: TextStyle(
+                                        color: Colors.red.shade700,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     );
@@ -113,4 +171,3 @@ class KelolaProductView extends StatelessWidget {
     );
   }
 }
-

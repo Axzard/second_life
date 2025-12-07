@@ -101,21 +101,6 @@ class ChatListView extends StatelessWidget {
                   style: TextStyle(color: Colors.grey.shade600, fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 24),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    vm.clearCache();
-                    if (currentUserId.isNotEmpty) {
-                      vm.loadChatList(currentUserId);
-                    }
-                  },
-                  icon: const Icon(Icons.refresh),
-                  label: const Text("Refresh"),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF00775A),
-                    foregroundColor: Colors.white,
-                  ),
-                ),
               ],
             ),
           );
