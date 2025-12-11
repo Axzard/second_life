@@ -105,11 +105,11 @@ class ProductSellerInfo extends StatelessWidget {
                         ),
                         SizedBox(height: screenHeight * 0.004),
                         Text(
-                          "Bergabung ",
+                          "Bergabung sejak " + seller["bergabung"],
                           style: TextStyle(fontSize: infoFontSize),
                         ),
                         Text(
-                          " produk dijual",
+                          seller["totalProduk"].toString() + " Produk dijual",
                           style: TextStyle(fontSize: infoFontSize),
                         ),
                       ],

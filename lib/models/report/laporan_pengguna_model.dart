@@ -9,11 +9,7 @@ class LaporanModel {
   final String productName;
   final String status;
   final DateTime timestamp;
-
-
-  // >>> FIELD GAMBAR / BUKTI LAPORAN
-  final String bukti; // base64 atau url
-  // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  final String bukti;
 
   LaporanModel({
     required this.id,
@@ -24,7 +20,6 @@ class LaporanModel {
     required this.productName,
     required this.status,
     required this.timestamp,
-
     required this.bukti,
   });
 
@@ -38,9 +33,7 @@ class LaporanModel {
       productName: map["productName"] ?? "",
       status: map["status"] ?? "pending",
       timestamp: (map["timestamp"] as Timestamp).toDate(),
-      // >>> FIELD GAMBAR
       bukti: map["bukti"] ?? "",
-      // <<<<<<<<<<<<<<<<<<
     );
   }
 }

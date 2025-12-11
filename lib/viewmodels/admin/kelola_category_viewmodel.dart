@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:second_life/models/products/category_model.dart';
-import 'package:second_life/services/products/category_service.dart';
+import 'package:second_life/services/category_service.dart';
 
 class KelolaKategoriViewModel extends GetxController {
   final CategoryService _service = CategoryService();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:second_life/services/auth/auth_service.dart';
+import 'package:second_life/services/auth_service.dart';
 
 class ForgotPasswordViewModel extends GetxController {
   final TextEditingController emailController = TextEditingController();

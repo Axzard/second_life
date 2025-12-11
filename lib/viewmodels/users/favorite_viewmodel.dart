@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:second_life/models/products/product_model.dart';
-import 'package:second_life/services/products/favorite_service.dart';
+import 'package:second_life/services/favorite_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

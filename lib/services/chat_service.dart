@@ -77,7 +77,7 @@ class ChatService {
 
     await msgRef.set({
       'senderId': senderId,
-      'text': "Halo! Saya tertarik dengan produk: ",
+      'text': "Halo! Saya tertarik dengan produk ${product.nama}",
       'timestamp': FieldValue.serverTimestamp(),
       'isAuto': true,
       'productId': product.id, // Tambahkan productId untuk tracking

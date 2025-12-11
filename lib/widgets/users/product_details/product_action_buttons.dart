@@ -1,7 +1,7 @@
 ﻿import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:second_life/models/products/product_model.dart';
-import 'package:second_life/services/chats/chat_service.dart';
+import 'package:second_life/services/chat_service.dart';
 import 'package:second_life/views/users/chats/chat_room_view.dart';
 
 class ProductActionButtons extends StatelessWidget {

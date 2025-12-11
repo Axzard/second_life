@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:second_life/models/products/product_model.dart';
-import 'package:second_life/services/products/favorite_service.dart';
+import 'package:second_life/services/favorite_service.dart';
 import 'package:second_life/views/users/products/product_detail_view.dart';
 
 class ProductCard extends StatelessWidget {

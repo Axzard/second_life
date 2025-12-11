@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:second_life/models/products/product_model.dart';
-import 'package:second_life/services/products/jual_barang_service.dart';
+import 'package:second_life/services/jual_barang_service.dart';
 
 class HomeUserViewModel extends GetxController {
   final JualBarangService _service = JualBarangService();

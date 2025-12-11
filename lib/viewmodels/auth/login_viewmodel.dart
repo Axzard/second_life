@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:second_life/services/auth/auth_service.dart';
-import 'package:second_life/services/auth/remember_me_service.dart';
-import 'package:second_life/services/auth/user_service.dart';
-import 'package:second_life/services/auth/user_status_service.dart';
+import 'package:second_life/services/auth_service.dart';
+import 'package:second_life/services/remember_me_service.dart';
+import 'package:second_life/services/user_service.dart';
+import 'package:second_life/services/user_status_service.dart';
 import 'package:second_life/models/auth/user_model.dart';
 import 'package:second_life/views/admin/admin_dashboard_view.dart';
 import 'package:second_life/views/auth/forgot_password_view.dart';

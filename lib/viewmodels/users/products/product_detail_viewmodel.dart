@@ -1,9 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:second_life/models/products/product_model.dart';
-import 'package:second_life/services/products/favorite_service.dart';
-import 'package:second_life/services/laporan/laporan_product_service.dart';
-import 'package:second_life/services/auth/user_service.dart';
+import 'package:second_life/services/favorite_service.dart';
+import 'package:second_life/services/user_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductDetailViewModel extends GetxController {
@@ -64,38 +62,6 @@ class ProductDetailViewModel extends GetxController {
     } catch (e) {
       return 0;
     }
-  }
-
-  Future<void> submitReport(
-    String jenisLaporan,
-    String alasan,
-    String buktiBase64,
-  ) async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user == null) return;
-
-    final dataPelapor = await FirebaseFirestore.instance
-        .collection("users")
-        .doc(user.uid)
-        .get();
-
-    final namaPelapor = dataPelapor.data()?["namaLengkap"] ?? "Unknown";
-
-    final dataPenjual = await FirebaseFirestore.instance
-        .collection("users")
-        .doc(product.userId)
-        .get();
-
-    final namaDilaporkan = dataPenjual.data()?["namaLengkap"] ?? "Unknown";
-
-    await LaporanService.report(
-      jenisLaporan: jenisLaporan,
-      namaPelapor: namaPelapor,
-      namaDilaporkan: namaDilaporkan,
-      productName: product.nama,
-      deskripsi: alasan,
-      buktiBase64: buktiBase64,
-    );
   }
 
   Future<void> checkFavorite() async {

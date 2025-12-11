@@ -238,7 +238,7 @@ class _ChatRoomViewState extends State<ChatRoomView> {
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: isMe ? Colors.blue[500] : Colors.grey[100],
+                    color: isMe ? Color(0xFF00775A) : Colors.grey[100],
                     borderRadius: BorderRadius.only(
                       topLeft: const Radius.circular(16),
                       topRight: const Radius.circular(16),
@@ -282,12 +282,12 @@ class _ChatRoomViewState extends State<ChatRoomView> {
               if (isMe)
                 CircleAvatar(
                   radius: 14,
-                  backgroundColor: Colors.blue[100],
+                  backgroundColor: Color(0xFF00775A),
                   child: Text(
                     'You',
                     style: TextStyle(
                       fontSize: 8,
-                      color: Colors.blue[800],
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -402,7 +402,7 @@ class _ChatRoomViewState extends State<ChatRoomView> {
 
                   await vm.reportUser(
                     pelaporId: widget.currentUserId,
-                    namaDilaporkan: widget.otherUserName, // Ganti dengan nama user dari DB jika tersedia
+                    namaDilaporkan: widget.otherUserName,
                     productName: widget.productName,
                     deskripsi: deskripsi,
                     jenisLaporan: selectedJenis,
@@ -446,13 +446,13 @@ class _ChatRoomViewState extends State<ChatRoomView> {
               title: Row(
                 children: [
                   CircleAvatar(
-                    backgroundColor: Colors.blue[100],
+                    backgroundColor: Color(0xFF00775A),
                     child: Text(
                       widget.otherUserName.isNotEmpty
                           ? widget.otherUserName[0].toUpperCase()
                           : '?',
                       style: const TextStyle(
-                        color: Colors.blue,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -539,12 +539,12 @@ class _ChatRoomViewState extends State<ChatRoomView> {
                         width: 40,
                         height: 40,
                         decoration: BoxDecoration(
-                          color: Colors.blue[100],
+                          color: Color(0xFF00775A),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Icon(
                           Icons.shopping_bag,
-                          color: Colors.blue,
+                          color: Colors.white,
                           size: 20,
                         ),
                       ),
@@ -667,7 +667,7 @@ class _ChatRoomViewState extends State<ChatRoomView> {
                       const SizedBox(width: 8),
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.blue[500],
+                          color: Color(0xFF00775A),
                           shape: BoxShape.circle,
                         ),
                         child: IconButton(

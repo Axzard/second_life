@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:second_life/models/auth/user_model.dart';
-import 'package:second_life/services/auth/user_service.dart';
+import 'package:second_life/services/user_service.dart';
 
 class KelolaUserViewModel extends GetxController {
   final UserService _userService = UserService();

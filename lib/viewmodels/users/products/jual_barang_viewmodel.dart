@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:second_life/models/products/product_model.dart';
-import 'package:second_life/services/products/jual_barang_service.dart';
+import 'package:second_life/services/jual_barang_service.dart';
 import 'package:second_life/utils/image_converter.dart';
 
 class JualBarangViewModel extends GetxController {

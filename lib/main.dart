@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:second_life/views/auth/welcome_view.dart';
-import 'package:second_life/services/auth/user_status_service.dart';
+import 'package:second_life/services/user_status_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

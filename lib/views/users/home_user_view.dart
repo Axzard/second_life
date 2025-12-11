@@ -177,7 +177,7 @@ class HomeUserView extends StatelessWidget {
 
               if (vm.filteredProducts.isEmpty) {
                 return const Center(
-                  child: Text("Tidak ada produk"),
+                  child: Text("Tidak ada produk yang ditemukan"),
                 );
               }
 

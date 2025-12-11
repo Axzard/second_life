@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:second_life/viewmodels/admin/laporan_pengguna_viewmodel.dart';
@@ -14,22 +16,39 @@ class LaporanPenggunaView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFF00775A),
         foregroundColor: Colors.white,
-        title: const Text("Kelola Laporan", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(
+          "Kelola Laporan",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: Column(
         children: [
           Container(
             color: Colors.white,
             padding: const EdgeInsets.all(16),
-            child: Obx(() => Row(
-              children: [
-                _buildFilterChip("Semua", vm.selectedFilter.value == "Semua", () => vm.selectFilter("Semua")),
-                const SizedBox(width: 8),
-                _buildFilterChip("Pending", vm.selectedFilter.value == "pending", () => vm.selectFilter("pending")),
-                const SizedBox(width: 8),
-                _buildFilterChip("Selesai", vm.selectedFilter.value == "selesai", () => vm.selectFilter("selesai")),
-              ],
-            )),
+            child: Obx(
+              () => Row(
+                children: [
+                  _buildFilterChip(
+                    "Semua",
+                    vm.selectedFilter.value == "Semua",
+                    () => vm.selectFilter("Semua"),
+                  ),
+                  const SizedBox(width: 8),
+                  _buildFilterChip(
+                    "Pending",
+                    vm.selectedFilter.value == "pending",
+                    () => vm.selectFilter("pending"),
+                  ),
+                  const SizedBox(width: 8),
+                  _buildFilterChip(
+                    "Selesai",
+                    vm.selectedFilter.value == "selesai",
+                    () => vm.selectFilter("selesai"),
+                  ),
+                ],
+              ),
+            ),
           ),
           Expanded(
             child: Obx(() {
@@ -73,25 +92,65 @@ class LaporanPenggunaView extends StatelessWidget {
                               const SizedBox(height: 8),
                               Text("Deskripsi: ${laporan.deskripsi}"),
                               const SizedBox(height: 16),
+                              laporan.bukti.isNotEmpty
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          "Bukti:",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+
+                                        // TAMPILKAN GAMBAR DARI BASE64
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                          child: Image.memory(
+                                            base64Decode(laporan.bukti),
+                                            height: 200,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : const Text("Bukti: Tidak ada bukti"),
+
+                              const SizedBox(height: 16),
                               Row(
                                 children: [
                                   Expanded(
                                     child: ElevatedButton(
-                                      onPressed: () => vm.updateStatus(laporan.id, "selesai"),
+                                      onPressed: () => vm.updateStatus(
+                                        laporan.id,
+                                        "selesai",
+                                      ),
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.green,
                                       ),
-                                      child: const Text("Tandai Selesai", style: TextStyle(color: Colors.white)),
+                                      child: const Text(
+                                        "Tandai Selesai",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(width: 8),
                                   Expanded(
                                     child: ElevatedButton(
-                                      onPressed: () => vm.deleteLaporan(laporan.id),
+                                      onPressed: () =>
+                                          vm.deleteLaporan(laporan.id),
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.red,
                                       ),
-                                      child: const Text("Hapus", style: TextStyle(color: Colors.white)),
+                                      child: const Text(
+                                        "Hapus",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -116,7 +175,9 @@ class LaporanPenggunaView extends StatelessWidget {
       onTap: onTap,
       child: Chip(
         label: Text(label),
-        backgroundColor: selected ? const Color(0xFF00775A) : Colors.grey.shade200,
+        backgroundColor: selected
+            ? const Color(0xFF00775A)
+            : Colors.grey.shade200,
         labelStyle: TextStyle(
           color: selected ? Colors.white : Colors.black,
           fontWeight: selected ? FontWeight.bold : FontWeight.normal,

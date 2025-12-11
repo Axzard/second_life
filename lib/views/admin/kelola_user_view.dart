@@ -80,12 +80,12 @@ class KelolaUserView extends StatelessWidget {
                         itemBuilder: (context) => [
                           PopupMenuItem(
                             value: "aktif",
-                            child: const Text("Set Aktif"),
+                            child: const Text("Aktifkan User"),
                             onTap: () => vm.ubahStatus(user.uid, "aktif"),
                           ),
                           PopupMenuItem(
                             value: "banned",
-                            child: const Text("Ban User"),
+                            child: const Text("Banned User"),
                             onTap: () => vm.ubahStatus(user.uid, "banned"),
                           ),
                         ],
