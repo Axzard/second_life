@@ -17,17 +17,19 @@ class ProfileView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      body: Obx(() => Skeletonizer(
-        enabled: vm.loading.value,
-        child: Column(
-          children: [
-            _buildHeader(vm),
-            _buildStats(vm),
-            _buildTabBar(vm),
-            Expanded(child: _buildTabContent(vm)),
-          ],
+      body: Obx(
+        () => Skeletonizer(
+          enabled: vm.loading.value,
+          child: Column(
+            children: [
+              _buildHeader(vm),
+              _buildStats(vm),
+              _buildTabBar(vm),
+              Expanded(child: _buildTabContent(vm)),
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 
@@ -35,7 +37,8 @@ class ProfileView extends StatelessWidget {
     return Obx(() {
       final profilePhoto = vm.user.value?.profilePhoto ?? '';
       final userName = vm.user.value?.namaLengkap ?? 'User Name Loading';
-      final userEmail = vm.user.value?.email ?? 'user@email.com';
+      final userBergabung =
+          vm.user.value?.bergabung ?? 'Tanggal Bergabung Loading';
       final userBio = vm.user.value?.bio ?? '';
 
       return Container(
@@ -63,82 +66,106 @@ class ProfileView extends StatelessWidget {
                     ),
                     IconButton(
                       icon: const Icon(Icons.settings, color: Colors.white),
-                      onPressed: vm.loading.value ? null : () => ProfileSettingsSheet.show(vm),
+                      onPressed: vm.loading.value
+                          ? null
+                          : () => ProfileSettingsSheet.show(vm),
                     ),
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 24),
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: vm.loading.value ? null : () => ProfileImagePicker.show(vm),
-                      child: Stack(
-                        children: [
-                          CircleAvatar(
-                            radius: 50,
-                            backgroundColor: Colors.white,
-                            backgroundImage: profilePhoto.isNotEmpty && !vm.loading.value
-                                ? MemoryImage(base64Decode(profilePhoto))
-                                : null,
-                            child: profilePhoto.isEmpty || vm.loading.value
-                                ? const Icon(Icons.person, size: 50, color: Color(0xFF00775A))
-                                : null,
-                          ),
-                          if (!vm.loading.value)
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: Container(
-                                padding: const EdgeInsets.all(4),
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(
-                                  Icons.camera_alt,
-                                  size: 20,
-                                  color: Color(0xFF00775A),
-                                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 24, left: 20),
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: vm.loading.value
+                              ? null
+                              : () => ProfileImagePicker.show(vm),
+                          child: Stack(
+                            children: [
+                              CircleAvatar(
+                                radius: 50,
+                                backgroundColor: Colors.white,
+                                backgroundImage:
+                                    profilePhoto.isNotEmpty && !vm.loading.value
+                                    ? MemoryImage(base64Decode(profilePhoto))
+                                    : null,
+                                child: profilePhoto.isEmpty || vm.loading.value
+                                    ? const Icon(
+                                        Icons.person,
+                                        size: 50,
+                                        color: Color(0xFF00775A),
+                                      )
+                                    : null,
                               ),
-                            ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      userName,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      userEmail,
-                      style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 14),
-                    ),
-                    if (userBio.isNotEmpty || vm.loading.value) ...[
-                      const SizedBox(height: 8),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 32),
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(8),
+                              if (!vm.loading.value)
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(4),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(
+                                      Icons.camera_alt,
+                                      size: 20,
+                                      color: Color(0xFF00775A),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
                         ),
-                        child: Text(
-                          vm.loading.value ? 'Bio pengguna akan muncul disini' : userBio,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(color: Colors.white, fontSize: 14),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Column(
+                    children: [
+                      Text(
+                        userName,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Bergabung ${userBergabung}',
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.9),
+                          fontSize: 14,
                         ),
                       ),
                     ],
+                  ),
+                ],
+              ),
+              if (userBio.isNotEmpty || vm.loading.value) ...[
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(width: 16),
+                    Text(
+                      vm.loading.value
+                          ? 'Bio pengguna akan muncul disini'
+                          : userBio.length > 50
+                          ? 'Bio: ${userBio.substring(0, 50)}\n${userBio.substring(50)}'
+                          : '$userBio',
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(color: Colors.white, fontSize: 14),
+                    ),
                   ],
                 ),
-              ),
+              ],
+              SizedBox(height: 16),
             ],
           ),
         ),
@@ -183,27 +210,29 @@ class ProfileView extends StatelessWidget {
   }
 
   Widget _buildTabBar(ProfileViewModel vm) {
-    return Obx(() => Container(
-      color: Colors.white,
-      child: Row(
-        children: [
-          ProfileWidgets.buildTabButton(
-            "Produk Saya",
-            Icons.inventory_2_outlined,
-            0,
-            vm.selectedTab.value,
-            vm.loading.value ? (_) {} : vm.selectTab,
-          ),
-          ProfileWidgets.buildTabButton(
-            "Terjual",
-            Icons.check_circle_outline,
-            1,
-            vm.selectedTab.value,
-            vm.loading.value ? (_) {} : vm.selectTab,
-          ),
-        ],
+    return Obx(
+      () => Container(
+        color: Colors.white,
+        child: Row(
+          children: [
+            ProfileWidgets.buildTabButton(
+              "Produk Saya",
+              Icons.inventory_2_outlined,
+              0,
+              vm.selectedTab.value,
+              vm.loading.value ? (_) {} : vm.selectTab,
+            ),
+            ProfileWidgets.buildTabButton(
+              "Terjual",
+              Icons.check_circle_outline,
+              1,
+              vm.selectedTab.value,
+              vm.loading.value ? (_) {} : vm.selectTab,
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 
   Widget _buildTabContent(ProfileViewModel vm) {
@@ -211,7 +240,7 @@ class ProfileView extends StatelessWidget {
       if (vm.loading.value) {
         return _buildSkeletonList();
       }
-      
+
       if (vm.selectedTab.value == 0) {
         return _buildMyProductsTab(vm);
       } else {
@@ -234,10 +263,7 @@ class ProfileView extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Bone.square(
-                size: 80,
-                borderRadius: BorderRadius.circular(8),
-              ),
+              Bone.square(size: 80, borderRadius: BorderRadius.circular(8)),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -286,7 +312,11 @@ class ProfileView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.inventory_2_outlined, size: 80, color: Colors.grey.shade400),
+            Icon(
+              Icons.inventory_2_outlined,
+              size: 80,
+              color: Colors.grey.shade400,
+            ),
             const SizedBox(height: 16),
             Text(
               "Belum ada produk",
@@ -297,24 +327,26 @@ class ProfileView extends StatelessWidget {
       );
     }
 
-    return Obx(() => ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      itemCount: vm.myProducts.length,
-      itemBuilder: (context, index) {
-        final product = vm.myProducts[index];
-        final images = product["images"] ?? [];
-        final firstImage = images.isNotEmpty ? images[0] : "";
+    return Obx(
+      () => ListView.builder(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        itemCount: vm.myProducts.length,
+        itemBuilder: (context, index) {
+          final product = vm.myProducts[index];
+          final images = product["images"] ?? [];
+          final firstImage = images.isNotEmpty ? images[0] : "";
 
-        return ProfileWidgets.buildProductCard(
-          firstImage,
-          product["name"] ?? "Tanpa Nama",
-          product["price"] ?? "Rp 0",
-          product["status"] ?? "Tersedia",
-          () => ProfileEditDialog.show(vm, product),
-          () => _confirmDelete(vm, product["id"]),
-        );
-      },
-    ));
+          return ProfileWidgets.buildProductCard(
+            firstImage,
+            product["name"] ?? "Tanpa Nama",
+            product["price"] ?? "Rp 0",
+            product["status"] ?? "Tersedia",
+            () => ProfileEditDialog.show(vm, product),
+            () => _confirmDelete(vm, product["id"]),
+          );
+        },
+      ),
+    );
   }
 
   Widget _buildSoldProductsTab(ProfileViewModel vm) {
@@ -323,7 +355,11 @@ class ProfileView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.check_circle_outline, size: 80, color: Colors.grey.shade400),
+            Icon(
+              Icons.check_circle_outline,
+              size: 80,
+              color: Colors.grey.shade400,
+            ),
             const SizedBox(height: 16),
             Text(
               "Belum ada produk yang terjual",
@@ -334,24 +370,26 @@ class ProfileView extends StatelessWidget {
       );
     }
 
-    return Obx(() => ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      itemCount: vm.soldProducts.length,
-      itemBuilder: (context, index) {
-        final product = vm.soldProducts[index];
-        final images = product["images"] ?? [];
-        final firstImage = images.isNotEmpty ? images[0] : "";
+    return Obx(
+      () => ListView.builder(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        itemCount: vm.soldProducts.length,
+        itemBuilder: (context, index) {
+          final product = vm.soldProducts[index];
+          final images = product["images"] ?? [];
+          final firstImage = images.isNotEmpty ? images[0] : "";
 
-        return ProfileWidgets.buildProductCard(
-          firstImage,
-          product["name"] ?? "Tanpa Nama",
-          product["price"] ?? "Rp 0",
-          product["status"] ?? "Terjual",
-          () => ProfileEditDialog.show(vm, product),
-          () => _confirmDelete(vm, product["id"]),
-        );
-      },
-    ));
+          return ProfileWidgets.buildProductCard(
+            firstImage,
+            product["name"] ?? "Tanpa Nama",
+            product["price"] ?? "Rp 0",
+            product["status"] ?? "Terjual",
+            () => ProfileEditDialog.show(vm, product),
+            () => _confirmDelete(vm, product["id"]),
+          );
+        },
+      ),
+    );
   }
 
   void _confirmDelete(ProfileViewModel vm, String productId) {

@@ -27,6 +27,7 @@ class ProductSellerInfo extends StatelessWidget {
     return {
       "namaLengkap": userData["namaLengkap"] ?? "Tidak diketahui",
       "bergabung": userData["bergabung"] ?? "-",
+      "bio": userData["bio"] ?? "-",
       "totalProduk": totalProduk,
     };
   }
@@ -110,6 +111,13 @@ class ProductSellerInfo extends StatelessWidget {
                         ),
                         Text(
                           seller["totalProduk"].toString() + " Produk dijual",
+                          style: TextStyle(fontSize: infoFontSize),
+                        ),
+                        Text(
+                          seller["bio"].toString().length > 180
+                              ? seller["bio"].toString().substring(0, 180) +
+                                    "..."
+                              : seller["bio"].toString(),
                           style: TextStyle(fontSize: infoFontSize),
                         ),
                       ],
